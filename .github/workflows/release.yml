@@ -1,11 +1,11 @@
-name: Release
+name: Pkg - Release and Publish
 on:
-  push:
-    branches:
-      - main
-      - beta
-      - alpha
-      - pre
+  workflow_call:
+    inputs:
+      enable-test-unit:
+        default: true
+        description: Enable unit tests => pnpm run test:unit
+        type: boolean
 
 permissions:
   contents: write
@@ -29,13 +29,13 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-            fetch-depth: 0
+          fetch-depth: 0
 
       - name: Get Node and PNPM version
         id: get-node-npm-version
         run: |
-            echo "NODE_VERSION=$(cat package.json | jq -r '.volta.node')" >> $GITHUB_OUTPUT
-            echo "PNPM_VERSION=$(cat package.json | jq -r '.packageManager' | awk -F'@' '{print $2}')" >> $GITHUB_OUTPUT
+          echo "NODE_VERSION=$(cat package.json | jq -r '.volta.node')" >> $GITHUB_OUTPUT
+          echo "PNPM_VERSION=$(cat package.json | jq -r '.packageManager' | awk -F'@' '{print $2}')" >> $GITHUB_OUTPUT
 
   release:
     name: Release
@@ -45,23 +45,24 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-            fetch-depth: 0
+          fetch-depth: 0
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
-            version: ${{ needs.setup.outputs.PNPM_VERSION }}
+          version: ${{ needs.setup.outputs.PNPM_VERSION }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-            node-version: ${{ needs.setup.outputs.NODE_VERSION }}
-            cache: 'pnpm'
+          node-version: ${{ needs.setup.outputs.NODE_VERSION }}
+          cache: 'pnpm'
 
       - name: Install Dependencies
         run: pnpm i --prefer-offline
 
       - name: Check unit tests
+        if: ${{ inputs.enable-test-unit }}
         run: pnpm run test:unit
 
       - name: Build
