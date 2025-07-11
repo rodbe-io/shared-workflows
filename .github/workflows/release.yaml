@@ -6,6 +6,16 @@ on:
         default: true
         description: Enable unit tests => pnpm run test:unit
         type: boolean
+    secrets:
+      NPM_TOKEN:
+        required: true
+      GH_TOKEN:
+        description: provided by secrets.GITHUB_TOKEN
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -70,6 +80,6 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm run release
