@@ -27,25 +27,7 @@ env:
 
 jobs:
   setup:
-    name: Setup workflow
-    runs-on: ubuntu-latest
-    outputs:
-      NODE_VERSION: ${{ steps.get-node-npm-version.outputs.NODE_VERSION }}
-      PNPM_VERSION: ${{ steps.get-node-npm-version.outputs.PNPM_VERSION }}
-    steps:
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get Node and PNPM version
-        id: get-node-npm-version
-        run: |
-          echo "NODE_VERSION=$(cat package.json | jq -r '.volta.node')" >> $GITHUB_OUTPUT
-          echo "PNPM_VERSION=$(cat package.json | jq -r '.packageManager' | awk -F'@' '{print $2}')" >> $GITHUB_OUTPUT
+    uses: ./.github/workflows/step-setup.yaml
 
   release:
     name: Release
