@@ -13,6 +13,9 @@ on:
       GH_TOKEN:
         description: provided by secrets.GITHUB_TOKEN
         required: true
+      NPM_REGISTRY_TOKEN:
+        description: if npmrc exists, it is used with the NPM_REGISTRY_TOKEN env
+        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -26,6 +29,7 @@ permissions:
 
 env:
   HUSKY: 0
+  NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
 jobs:
   setup:
