@@ -6,6 +6,7 @@ on:
         default: true
         description: Enable unit tests => pnpm run test:unit
         type: boolean
+
     secrets:
       NPM_TOKEN:
         required: true

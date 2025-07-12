@@ -1,6 +1,13 @@
 name: Get basic information
 on:
   workflow_call:
+    outputs:
+      NODE_VERSION:
+        description: Node.js version
+        value: ${{ jobs.setup.outputs.NODE_VERSION }}
+      PNPM_VERSION:
+        description: PNPM version
+        value: ${{ jobs.setup.outputs.PNPM_VERSION }}
 
 env:
   HUSKY: 0
