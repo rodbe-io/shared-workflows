@@ -33,6 +33,7 @@ jobs:
         run: |
           echo "NODE_VERSION=$(cat package.json | jq -r '.volta.node')" >> $GITHUB_OUTPUT
           echo "PNPM_VERSION=$(cat package.json | jq -r '.packageManager' | awk -F'@' '{print $2}')" >> $GITHUB_OUTPUT
+
       - name: Log outputs
         run: |
           echo "NODE_VERSION: ${{ steps.get-node-npm-version.outputs.NODE_VERSION }}"
