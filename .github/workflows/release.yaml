@@ -8,8 +8,6 @@ on:
         type: boolean
 
     secrets:
-      NPM_TOKEN:
-        required: true
       GH_TOKEN:
         description: provided by secrets.GITHUB_TOKEN
         required: true
