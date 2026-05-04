@@ -14,6 +14,10 @@ on:
       NPM_REGISTRY_TOKEN:
         description: if npmrc exists, it is used with the NPM_REGISTRY_TOKEN env
         required: false
+      MY_ENV_1:
+        required: false
+      MY_ENV_2:
+        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }} # ${{ github.head_ref }}
@@ -29,6 +33,8 @@ permissions:
 env:
   HUSKY: 0
   NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+  MY_ENV_1: ${{ secrets.MY_ENV_1 }}
+  MY_ENV_2: ${{ secrets.MY_ENV_2 }}
 
 jobs:
   setup:
