@@ -33,8 +33,8 @@ permissions:
 env:
   HUSKY: 0
   NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
-  MY_ENV_1: ${{ secrets.MY_ENV_1 }}
-  MY_ENV_2: ${{ secrets.MY_ENV_2 }}
+  MY_ENV_1: ${{ secrets.MY_SECRET_TEST }}
+  MY_ENV_2: 'desde el shared'
 
 jobs:
   setup:
