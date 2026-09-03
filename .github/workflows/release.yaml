@@ -51,31 +51,31 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v6
-        with:
-          version: ${{ needs.setup.outputs.PNPM_VERSION }}
+      # - name: Setup PNPM
+      #   uses: pnpm/action-setup@v6
+      #   with:
+      #     version: ${{ needs.setup.outputs.PNPM_VERSION }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          cache: 'pnpm'
-          node-version: ${{ needs.setup.outputs.NODE_VERSION }}
-          registry-url: 'https://registry.npmjs.org'
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v7
+      #   with:
+      #     cache: 'pnpm'
+      #     node-version: ${{ needs.setup.outputs.NODE_VERSION }}
+      #     registry-url: 'https://registry.npmjs.org'
 
       - name: Log outputs for debugging
         run: |
           echo "NODE_VERSION: ${{ needs.setup.outputs.NODE_VERSION }}"
           echo "PNPM_VERSION: ${{ needs.setup.outputs.PNPM_VERSION }}"
 
-      # - name: Setup PNPM
-      #   uses: pnpm/setup@v2.1.0
-      #   with:
-      #     cache: true
-      #     install: false
-      #     require-lockfile: true
-      #     runtime: node@${{ needs.setup.outputs.NODE_VERSION }}
-      #     version: ${{ needs.setup.outputs.PNPM_VERSION }}
+      - name: Setup PNPM
+        uses: pnpm/setup@v2.1.0
+        with:
+          cache: true
+          install: false
+          require-lockfile: true
+          runtime: node@${{ needs.setup.outputs.NODE_VERSION }}
+          version: ${{ needs.setup.outputs.PNPM_VERSION }}
 
       - name: Install Dependencies
         run: pnpm i --prefer-offline
