@@ -68,7 +68,7 @@ jobs:
           echo "PNPM_VERSION: ${{ needs.setup.outputs.PNPM_VERSION }}"
 
       - name: Setup PNPM
-        uses: pnpm/setup@v2
+        uses: pnpm/setup@v2.1.0
         with:
           cache: true
           install: false
