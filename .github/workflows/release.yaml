@@ -73,7 +73,7 @@ jobs:
           cache: true
           install: false
           require-lockfile: true
-          runtime: node@${{ needs.setup.outputs.PNPM_VERSION }}
+          runtime: node@${{ needs.setup.outputs.NODE_VERSION }}
           version: ${{ needs.setup.outputs.PNPM_VERSION }}
 
       - name: Install Dependencies
