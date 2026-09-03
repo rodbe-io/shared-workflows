@@ -47,25 +47,34 @@ jobs:
     needs: [setup]
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ needs.setup.outputs.PNPM_VERSION }}
+      # - name: Setup PNPM
+      #   uses: pnpm/action-setup@v4
+      #   with:
+      #     version: ${{ needs.setup.outputs.PNPM_VERSION }}
+
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ needs.setup.outputs.NODE_VERSION }}
+      #     cache: 'pnpm'
 
       - name: Log outputs for debugging
         run: |
           echo "NODE_VERSION: ${{ needs.setup.outputs.NODE_VERSION }}"
           echo "PNPM_VERSION: ${{ needs.setup.outputs.PNPM_VERSION }}"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup PNPM
+        uses: pnpm/setup@v2
         with:
-          node-version: ${{ needs.setup.outputs.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: true
+          install: false
+          require-lockfile: true
+          runtime: node@${{ needs.setup.outputs.PNPM_VERSION }}
+          version: ${{ needs.setup.outputs.PNPM_VERSION }}
 
       - name: Install Dependencies
         run: pnpm i --prefer-offline
